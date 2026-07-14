@@ -575,6 +575,9 @@ section{ position:relative; }
   .why-grid{ grid-template-columns:1fr; gap:40px; }
   .why-photo img{ transform:none; max-width:520px; margin:0 auto; }
   .why-photo img:hover{ transform:scale(1.02); }
+  .about-grid{ grid-template-columns:1fr; gap:40px; }
+  .about-grid img{ transform:none; max-width:520px; margin:0 auto; display:block; }
+  .about-grid img:hover{ transform:scale(1.02); }
 }
 
 /* ---------- Scroll-Reveal-Animation: Wisch-Effekt von links nach rechts (alle Hauptseiten) ---------- */
@@ -672,7 +675,9 @@ section{ position:relative; }
   <section class="about-section section-pad">
     <div class="color-glow gold"></div>
     <div class="container about-grid">
-      <img src="images/Logo_Webseite.png" alt="Flächenglanz Service Logo" class="reveal">
+      <div class="reveal">
+        <img src="images/Logo_Webseite.png" alt="Flächenglanz Service Logo">
+      </div>
       <div class="reveal reveal-delay">
         <div class="eyebrow">Über uns</div>
         <h2>Wer sind wir eigentlich, und warum machen wir dieses Business ?</h2>
