@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Flächenglanz Service | Professionelle Fensterreinigung</title>
-<meta name="description" content="Flächenglanz Service: Ihre Fensterreinigung in Löhne und Umgebung. Ich sorge mit einer sorgfältigen und zuverlässigen Fensterreinigung für eine klare Sicht.">
+<meta name="description" content="Flächenglanz Service: Ihre Fensterreinigung in Löhne und Umgebung. Wir sorgen mit einer sorgfältigen und zuverlässigen Fensterreinigung für eine klare Sicht.">
 <link rel="icon" href="images/Logo_67.png">
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -315,24 +315,19 @@ section{ position:relative; }
 
 /* ---------- Über-mich Sektion ---------- */
 .about-section{ background:linear-gradient(200deg, var(--c-700) 0%, var(--c-600) 50%, var(--c-700) 100%); color:var(--ink); position:relative; overflow:hidden; }
-.about-grid{ display:grid; grid-template-columns:.9fr 1.1fr; gap:80px; align-items:center; position:relative; z-index:1; }
-@media (max-width:860px){ .about-grid{ grid-template-columns:1fr; } }
+/* Bild und Text sollen auf JEDEM Gerät (Handy, iPad, PC) exakt das gleiche Größenverhältnis behalten -> feste 1fr/1fr Spalten, keine Umschaltung auf einspaltig */
+.about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; position:relative; z-index:1; }
 .about-grid img{ 
   border-radius:var(--radius-lg); box-shadow:var(--shadow-soft); transform:rotate(2deg); border:8px solid var(--c-700); 
-  width:75%; margin: 0 auto; 
+  width:100%; margin: 0 auto; 
   transition: transform .25s ease, box-shadow .25s ease;
-}
-/* Auf Tablets/iPads (und kleineren Laptops) wieder größer, da 75% dort zu klein wirkt */
-@media (max-width:1400px){
-  .about-grid img{ width:100%; }
 }
 .about-grid img:hover {
   transform: rotate(2deg) scale(1.03);
   box-shadow: 0 30px 60px -15px rgba(12,45,70,0.45);
 }
-@media (max-width:860px){
-  .about-grid img{ transform:none; }
-  .about-grid img:hover{ transform:scale(1.02); }
+@media (max-width:600px){
+  .about-grid{ gap:24px; }
 }
 #page-startseite .about-section h2{ font-size:2.4rem; color:var(--ink); }
 .about-section p{ color:var(--ink-soft); font-size:1.3rem; }
@@ -356,7 +351,8 @@ section{ position:relative; }
 .footer-legal{ text-align:center; color:var(--ink-faint); font-size:.95rem; }
 
 /* ---------- Leistungen Grid ---------- */
-.clean-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:36px; margin-top:40px; }
+/* Immer exakt 3 Leistungen pro Reihe (2 Reihen à 3) auf jedem Gerät -> Handy, iPad und PC */
+.clean-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:36px; margin-top:40px; }
 .clean-card{
   background:var(--c-800); border-radius:var(--radius-lg); overflow:hidden;
   box-shadow:var(--shadow-card); border:2px solid var(--c-700); border-top:5px solid var(--c-400);
@@ -532,8 +528,6 @@ section{ position:relative; }
   .container{ padding: 0 36px; }
   .pricecalc-card .pricecalc-text{ padding: 40px; }
   .clean-card .clean-body{ padding: 26px; }
-  /* Leistungen-Seite: auf iPad immer 3 pro Reihe (2 Reihen à 3 = 6 Leistungen) */
-  .clean-grid{ grid-template-columns: repeat(3, 1fr); }
   .social-card .btn,
   .clean-card .btn,
   .ba-slider-grid .btn{ padding:18px 28px; font-size:1.05rem; }
@@ -557,6 +551,23 @@ section{ position:relative; }
   .clean-card p{ font-size: .95rem; }
 }
 
+/* Handys (<721px): 3 Spalten bleiben erhalten, Karten aber deutlich kompakter, damit sie nicht gequetscht wirken */
+@media (max-width:720px){
+  .clean-grid{ gap: 10px; }
+  .clean-card{ border-width:1px; border-top-width:3px; }
+  .clean-card .clean-media{ height: 70px; }
+  .clean-card .clean-body{ padding: 8px; }
+  .clean-card .clean-num{ font-size: .65rem; }
+  .clean-card h3{ font-size: .78rem; margin-top:.3em; }
+  .clean-card p{ font-size: .68rem; margin-top:.3em; line-height:1.3; }
+}
+@media (max-width:420px){
+  .clean-card .clean-media{ height: 55px; }
+  .clean-card .clean-body{ padding: 6px; }
+  .clean-card h3{ font-size: .7rem; }
+  .clean-card p{ display:none; }
+}
+
 /* Startseite: "Warum mich wählen" & "Über mich"-Bilder wirken im iPad-Bereich (721-1366px) zu klein,
    da dort weiterhin die 2-spaltige PC-Aufteilung mit 80px-Gap genutzt wird. Auf Tablets stattdessen
    wie auf dem Handy einspaltig darstellen, damit die Bilder groß und klar zu sehen sind. */
@@ -564,20 +575,28 @@ section{ position:relative; }
   .why-grid{ grid-template-columns:1fr; gap:40px; }
   .why-photo img{ transform:none; max-width:520px; margin:0 auto; }
   .why-photo img:hover{ transform:scale(1.02); }
-  .about-grid{ grid-template-columns:1fr; gap:40px; }
-  .about-grid img{ width:100%; max-width:480px; transform:none; }
-  .about-grid img:hover{ transform:scale(1.02); }
 }
 
-/* ---------- Scroll-Reveal-Animation (alle Hauptseiten) ---------- */
+/* ---------- Scroll-Reveal-Animation: Wisch-Effekt von links nach rechts (alle Hauptseiten) ---------- */
+/* Der Kasten (clip) bleibt gerade/rechteckig; der 40px-Puffer sorgt dafür,
+   dass leicht gekippte Fotos samt Rahmen/Schatten (z.B. .why-photo img,
+   .about-grid img mit rotate()) beim Wischen nicht an den Ecken abgeschnitten
+   werden und dadurch "gebuggt" aussehen. */
 .reveal{
   opacity:0;
-  transform:translateY(55px);
-  transition:opacity .8s ease, transform .8s ease;
+  clip-path: inset(-40px 100% -40px -40px);
+  -webkit-clip-path: inset(-40px 100% -40px -40px);
+  transform:translateX(-30px);
+  transition: clip-path .9s cubic-bezier(.25,.75,.35,1),
+              -webkit-clip-path .9s cubic-bezier(.25,.75,.35,1),
+              transform .9s cubic-bezier(.25,.75,.35,1),
+              opacity .4s ease;
 }
 .reveal.is-visible{
   opacity:1;
-  transform:translateY(0);
+  clip-path: inset(-40px -40px -40px -40px);
+  -webkit-clip-path: inset(-40px -40px -40px -40px);
+  transform:translateX(0);
 }
 .reveal.reveal-delay{
   transition-delay:.18s;
@@ -615,7 +634,7 @@ section{ position:relative; }
       <div>
         <div class="hero-tagline">Ihre Fensterreinigung in Löhne und Umgebung</div>
         <h1>Flächenglanz Service:</h1>
-        <p class="lead">Ich sorge mit einer sorgfältigen und zuverlässigen Fensterreinigung für eine klare Sicht und glänzende Fenster, damit Ihr Zuhause wieder ein Stück gepflegter und einladender wirkt.</p>
+        <p class="lead">Wir sorgen mit einer sorgfältigen und zuverlässigen Fensterreinigung für eine klare Sicht und glänzende Fenster, damit Ihr Zuhause wieder ein Stück gepflegter und einladender wirkt.</p>
         <div class="btn-row">
           <a onclick="navigateTo('leistungen')" class="btn btn-primary">Leistungen</a>
           <a onclick="navigateTo('kontaktieren')" class="btn btn-ghost">Kontaktieren</a>
@@ -634,16 +653,16 @@ section{ position:relative; }
         <img src="images/Gewischtes_Fenster.jpeg" alt="Inhaber von Flächenglanz Service">
       </div>
       <div class="reveal reveal-delay">
-        <div class="eyebrow">Warum mich wählen?</div>
-        <h2>Warum mich wählen ?</h2>
+        <div class="eyebrow">Warum uns wählen?</div>
+        <h2>Warum uns wählen ?</h2>
         <ul class="check-list">
-          <li><span class="tick">✓</span> Zuverlässig & pünktlich — ich halte meine Termine ein</li>
+          <li><span class="tick">✓</span> Zuverlässig & pünktlich — wir halten unsere Termine ein</li>
           <li><span class="tick">✓</span> Streifenfreies Ergebnis — ohne zurückbleibenden Schmutz</li>
           <li><span class="tick">✓</span> Faire Preise — passend zur Größe Ihrer Fenster</li>
           <li><span class="tick">✓</span> Reinigung innen und außen — inklusive Rahmen und Bank</li>
         </ul>
         <div class="btn-row" style="margin-top:28px;">
-          <a href="https://julien-stralleger.github.io/Preis-Kalkulator/" target="_blank" rel="noopener" class="btn btn-outline-navy">Preis berechnen</a>
+          <a href="https://flaechenglanz.github.io/Preise/" target="_blank" rel="noopener" class="btn btn-outline-navy">Preis berechnen</a>
           <a onclick="navigateTo('referenzen')" class="btn btn-outline-navy">Referenzen</a>
         </div>
       </div>
@@ -655,12 +674,12 @@ section{ position:relative; }
     <div class="container about-grid">
       <img src="images/Logo_Webseite.png" alt="Flächenglanz Service Logo" class="reveal">
       <div class="reveal reveal-delay">
-        <div class="eyebrow">Über mich</div>
-        <h2>Wer bin ich eigentlich, und warum mache ich dieses Business ?</h2>
-        <p>Ich bin ein 16 jähriger Junge, der neben der Schule versucht einen Schritt in die Selbstständigkeit zu wagen. Mit meinem Reinigungsservice möchte ich dazu beitragen, dass Fenster wieder sauber, klar und gepflegt aussehen.</p>
-        <p>Die Idee zu diesem Business entstand, als ich gesehen habe, welchen Unterschied eine gründliche Fensterreinigung machen kann. Verschmutzte Fenster können mit genug Arbeit, Zeit und der richtigen Reinigung wieder deutlich sauberer und streifenfrei aussehen. Diese Veränderung hat mich begeistert und motiviert, selbst aktiv zu werden.</p>
-        <p>Deshalb habe ich mich nun entschieden, meinen eigenen Reinigungsservice aufzubauen.</p>
-        <p>Mein großes Ziel ist es, jedem Kunden eine gründliche und vorallem zuverlässige Dienstleistung zu bieten. Deshalb versuche ich bei jedem Auftrag mein bestes zu geben und Tag für Tag besser zu werden um so meinem großen Ziel näher zu kommen.</p>
+        <div class="eyebrow">Über uns</div>
+        <h2>Wer sind wir eigentlich, und warum machen wir dieses Business ?</h2>
+        <p>Ich bin ein 16 jähriger Junge, der neben Schule den Schritt in die Selbstständigkeit wagen möche. Deshalb leite ich nun Flächenglanz Service und werde dabei teilweise von meinem Bruder und einem guten Freund unersüzt, wenn Aufträge anstehen. Gemeinsam möchten wir dazu beitragen, dass Fenster wieder sauber, klar und gepflegt aussehen.</p>
+        <p>Die Idee zu diesem Business entstand, als ich gesehen haben, welchen Unterschied eine gründliche Fensterreinigung machen kann. Verschmutzte Fenster können mit genug Arbeit, Zeit und der richtigen Reinigung wieder deutlich sauberer und streifenfrei aussehen. Diese Veränderung hat mich begeistert und motiviert, selbst aktiv zu werden.</p>
+        <p>Deshalb habe ich mich entschieden nun meinen eigenen Reinigungsservice für Fenster und später noch weitere Leistungen wie Einfahrten und Terassen aufzubauen.</p>
+        <p>Mein großes Ziel ist es, jedem Kunden eine gründliche und vor allem zuverlässige Dienstleistung zu bieten. Deshalb geben ich und mein Teams bei jedem Auftrag unser Bestes und werden Tag für Tag besser, um diesem Ziel immer näher zu kommen.</p>
       </div>
     </div>
   </section>
@@ -670,7 +689,7 @@ section{ position:relative; }
   <section class="hero" style="padding:40px 0 50px;">
     <div class="glanz-streak"></div>
     <div class="container" style="position:relative; z-index:1;">
-      <h1>Was reinige ich alles ?</h1>
+      <h1>Was reinigen wir alles ?</h1>
     </div>
   </section>
 
@@ -728,7 +747,7 @@ section{ position:relative; }
       </div>
 
       <div class="btn-row" style="margin-top:56px;">
-        <a onclick="navigateTo('referenzen')" class="btn btn-primary">Zu meinen Ergebnissen</a>
+        <a onclick="navigateTo('referenzen')" class="btn btn-primary">Zu unseren Ergebnissen</a>
         <a onclick="navigateTo('kontaktieren')" class="btn btn-outline-navy">Kontaktieren</a>
       </div>
     </div>
@@ -738,9 +757,9 @@ section{ position:relative; }
     <div class="container">
       <div class="eyebrow">Schnell & unverbindlich</div>
       <h2>Was kostet Ihre Fensterreinigung?</h2>
-      <a href="https://julien-stralleger.github.io/Preis-Kalkulator/" target="_blank" rel="noopener" class="pricecalc-card">
+      <a href="https://flaechenglanz.github.io/Preise/" target="_blank" rel="noopener" class="pricecalc-card">
         <div class="pricecalc-media">
-          <img src="images/IMG_3508.jpeg" alt="Preisrechner Fensterreinigung">
+          <img src="images/Preisrechner.png" alt="Preisrechner Fensterreinigung">
         </div>
         <div class="pricecalc-text">
           <h3>Preisrechner Fensterreinigung</h3>
@@ -761,8 +780,8 @@ section{ position:relative; }
           <div class="faq-body">
             <div class="faq-icon" aria-hidden="true">€</div>
             <div class="faq-text">
-              <p>Da ich meinen Service gerade erst aufbaue, biete ich meine Leistungen bewusst unter dem üblichen Marktpreis an. So kann ich mit jedem Auftrag mehr Erfahrung sammeln und meine Arbeit weiter verbessern.</p>
-              <p>Als Gegenleistung bitte ich darum, meinen Arbeitseinsatz vor Ort für meine Social-Media-Kanäle dokumentieren zu dürfen — selbstverständlich nur mit Ihrer ausdrücklichen Erlaubnis.</p>
+              <p>Da wir unseren Service gerade erst aufbauen, bieten wir unsere Leistungen bewusst unter dem üblichen Marktpreis an. So können wir mit jedem Auftrag mehr Erfahrung sammeln und unsere Arbeit weiter verbessern.</p>
+              <p>Als Gegenleistung bitten wir darum, unseren Arbeitseinsatz vor Ort für unsere Social-Media-Kanäle dokumentieren zu dürfen — selbstverständlich nur mit Ihrer ausdrücklichen Erlaubnis.</p>
             </div>
           </div>
         </details>
@@ -795,7 +814,7 @@ section{ position:relative; }
   <section class="hero" style="padding:40px 0 50px;">
     <div class="glanz-streak"></div>
     <div class="container" style="position:relative; z-index:1;">
-      <h1>Meine Vorher/Nacher Ergebnisse:</h1>
+      <h1>Unsere Vorher/Nacher Ergebnisse:</h1>
     </div>
   </section>
 
@@ -852,7 +871,7 @@ section{ position:relative; }
           <div class="social-banner"><img src="images/Google.png" alt="Google"></div>
           <div class="social-body">
             <h3>Google Bewertungen</h3>
-            <p>Schaue dir meine bisherigen Bewertungen an und sehe so was andere über meine Arbeit sagen:</p>
+            <p>Schaue dir unsere bisherigen Bewertungen an und sehe so was andere über unsere Arbeit sagen:</p>
             <a href="https://g.page/r/CRSNlhS5OFIdEAE/review" target="_blank" rel="noopener" class="btn btn-primary">Bewertungen ansehen</a>
           </div>
         </div>
@@ -860,7 +879,7 @@ section{ position:relative; }
           <div class="social-banner"><img src="images/TikTok.jpg" alt="TikTok"></div>
           <div class="social-body">
             <h3>TikTok-Dokumentationen</h3>
-            <p>Schaue dir meine Kurzvideos an um selbst zu sehen wie ich arbeite:</p>
+            <p>Schaue dir unsere Kurzvideos an um selbst zu sehen wie wir arbeiten:</p>
             <a href="https://www.tiktok.com/@DEIN_TIKTOK_HANDLE" target="_blank" rel="noopener" class="btn btn-outline-navy">Zu TikTok</a>
           </div>
         </div>
@@ -868,7 +887,7 @@ section{ position:relative; }
           <div class="social-banner"><img src="images/Instagramm.png" alt="Instagram"></div>
           <div class="social-body">
             <h3>Instagramm-Dokumentationen</h3>
-            <p>Schaue dir meine Kurzvideos an um selbst zu sehen wie ich arbeite:</p>
+            <p>Schaue dir unsere Kurzvideos an um selbst zu sehen wie wir arbeiten:</p>
             <a href="https://www.instagram.com/DEIN_INSTAGRAM_HANDLE" target="_blank" rel="noopener" class="btn btn-outline-navy">Zu Instagram</a>
           </div>
         </div>
@@ -886,7 +905,7 @@ section{ position:relative; }
   <section class="hero" style="padding:40px 0 50px;">
     <div class="glanz-streak"></div>
     <div class="container" style="position:relative; z-index:1;">
-      <h1>Neugierig geworden ? Dann kontaktieren sie mich jetzt für ihre erste Reinigung:</h1>
+      <h1>Neugierig geworden ? Dann kontaktieren sie uns jetzt für ihre erste Reinigung:</h1>
     </div>
   </section>
 
@@ -913,26 +932,29 @@ section{ position:relative; }
             <input type="text" id="termin" name="Gewünschter Termin">
           </div>
           <div class="form-group">
-            <label for="nachricht">Nachricht (Anzahl & Größe der Fenster, sonstige Infos, Fragen, wie sie mich gefunden/von mir erfahren haben)</label>
+            <label for="nachricht">Nachricht (Anzahl & Größe der Fenster, sonstige Infos, Fragen, wie sie uns gefunden/von uns erfahren haben)</label>
             <textarea id="nachricht" name="Nachricht" rows="5"></textarea>
           </div>
           <button type="submit" class="btn btn-primary" style="width:100%;">Anfrage senden</button>
         </form>
 
-        <p style="text-align:center; margin-top:30px; color:var(--ink-soft); font-size:1.2rem;">Alternativ können Sie mich auch direkt anrufen unter der Nummer:</p>
+        <p style="text-align:center; margin-top:30px; color:var(--ink-soft); font-size:1.2rem;">Alternativ können Sie uns auch direkt anrufen unter der Nummer:</p>
         <div style="text-align:center;">
           <a href="tel:+491627484659" class="phone-pill">📞 +49 162 7484659 📞</a>
         </div>
       </div>
 
       <div>
+        <div class="glass-card" style="margin-bottom: 20px; padding: 20px 25px;">
+          <p style="color:var(--ink-soft); margin:0;">Dies ist mein Wirkungskreis, in dem ich meine Leistungen anbiete – ein Radius von ca. 5&nbsp;km. Geben Sie einfach Ihre Adresse in die Suchleiste der Karte ein, um zu sehen, ob Sie sich im Kreis befinden (auch knapp darüber ist meist noch okay).</p>
+        </div>
         <div class="map-frame">
           <div id="radius-map" style="width: 100%; height: 550px; z-index: 1;"></div>
         </div>
         
         <div class="hours-box">
           <div class="eyebrow" style="margin-bottom: 10px;">Erreichbarkeit</div>
-          <h2 style="font-size: 1.4rem; font-weight: 700;">Wann habe ich Zeit?</h2>
+          <h2 style="font-size: 1.4rem; font-weight: 700;">Wann haben wir Zeit?</h2>
           <table class="hours-table">
             <tr><td>Montags und Mittwochs</td><td>ab 16:30 Uhr</td></tr>
             <tr><td>Dienstags, Donnerstags und Freitags</td><td>ab 14 Uhr</td></tr>
@@ -945,9 +967,9 @@ section{ position:relative; }
 
   <section class="cta-band" style="padding: 60px 0 90px; border-top: 2px solid var(--c-700);">
     <div class="container" style="max-width:1200px; text-align: center;">
-      <h2 style="font-size: 1.8rem;">Ich war schon einmal bei ihnen ?</h2>
+      <h2 style="font-size: 1.8rem;">Waren Sie schon einmal bei uns ?</h2>
       <p style="font-size: 1.25rem; color:var(--ink-soft); max-width: 90ch; margin: 0 auto 1.5em; line-height: 1.6;">
-        Dann verfassen sie doch einfach und schnell ihre eigene Google Bewertung und wenn ihnen meine Arbeit gefallen hat Empfehlen sie mich doch gerne an ihren Freunde, Nachbarn, Familie oder andere Bekannte weiter oder kontaktieren sich mich erneut wenn es mal wieder Zeit für eine Reinigung ihrer Fenster wird. <br> Bis dahin Viele Grüße von ihrem Flächenglanz Service !
+        Dann verfassen sie doch einfach und schnell ihre eigene Google Bewertung und wenn ihnen unsere Arbeit gefallen hat Empfehlen sie uns doch gerne an ihren Freunde, Nachbarn, Familie oder andere Bekannte weiter oder kontaktieren Sie uns erneut wenn es mal wieder Zeit für eine Reinigung ihrer Fenster wird. <br> Bis dahin Viele Grüße von ihrem Flächenglanz Service !
       </p>
       <a href="https://g.page/r/CRSNlhS5OFIdEAE/review" target="_blank" rel="noopener" class="btn btn-primary">Google Bewertung verfassen</a>
     </div>
