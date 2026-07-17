@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://flaechenglanz.github.io/service/sitemap.xml
