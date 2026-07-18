@@ -301,14 +301,6 @@ document.addEventListener('DOMContentLoaded', function(){
       }
     }
 
-    const discount = parseFloat(document.getElementById('pkp-discount').value || 0);
-    const discountAmount = total * (discount / 100);
-    total -= discountAmount;
-    if (discountAmount > 0){
-      breakdown.push(`<div class="result-row"><span>Rabatt (${discount}%)</span><span>-${pkFormatEuro(discountAmount)}</span></div>`);
-      detailsLines.push(`Rabatt ${discount}%: -${pkFormatEuro(discountAmount)}`);
-    }
-
     if (total < PK_MIN_PRICE && (hasWindows || wgM2 > 0)) total = PK_MIN_PRICE;
 
     const card = document.getElementById("pkp-result-card");
