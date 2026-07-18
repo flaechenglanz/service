@@ -199,9 +199,9 @@ document.addEventListener('DOMContentLoaded', function(){
     falz: "Falz/Rahmen/Fensterbank-Zuschlag"
   };
   const PK_SURCHARGES = {
-    klein:  { dach: 1, sprossen: 0.75, falz: 0.75 },
+    klein:  { dach: 1, sprossen: 0.5, falz: 0.5 },
     mittel: { dach: 1.5,  sprossen: 1,   falz: 1 },
-    gross:  { dach: 2,    sprossen: 1.5, falz: 1.5 }
+    gross:  { dach: 2,    sprossen: 1, falz: 1 }
   };
   const PK_GLASS = { ein: 2, sprossenFix: 1 };
   const PK_MIN_PRICE = 30;
