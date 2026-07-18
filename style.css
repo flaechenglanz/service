@@ -588,7 +588,15 @@ section{ position:relative; }
 .legal-container p, .legal-container li { font-size: 1.15rem; color: var(--ink-soft); }
 
 /* ---------- Eingebetteter Preisrechner (Kontaktformular) ---------- */
-.pk-embed{ margin:8px 0 30px; }
+/* Preisrechner erhält eine Stufe dunklere Blautöne als der Rest der Seite,
+   damit er nicht so grell/hell wirkt (bleibt aber in derselben Blau-Farbfamilie). */
+.pk-embed{
+  margin:8px 0 30px;
+  --c-800:#88C2EC;
+  --c-900:#6DB4E2;
+  --c-700:#4A9DD6;
+  --c-400:#155E93;
+}
 .pk-embed .pk-intro{ margin-bottom:22px; }
 .pk-embed .pk-intro .eyebrow{ margin-bottom:8px; }
 .pk-embed .pk-intro h3{ margin:0 0 6px; font-size:1.3rem; font-family:var(--font-display); font-weight:800; color:var(--ink); }

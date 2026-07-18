@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', function(){
   if (!embed) return;
 
   const PK_PRICES = {
-    klein:  { ein: 1.5, label: "Kleine Fenster" },
+    klein:  { ein: 2, label: "Kleine Fenster" },
     mittel: { ein: 3,   label: "Mittelgroße Fenster" },
     gross:  { ein: 4,   label: "Große Fenster" }
   };
@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded', function(){
     falz: "Falz/Rahmen/Fensterbank-Zuschlag"
   };
   const PK_SURCHARGES = {
-    klein:  { dach: 0.75, sprossen: 0.5, falz: 0.5 },
+    klein:  { dach: 1, sprossen: 0.75, falz: 0.75 },
     mittel: { dach: 1.5,  sprossen: 1,   falz: 1 },
     gross:  { dach: 2,    sprossen: 1.5, falz: 1.5 }
   };
