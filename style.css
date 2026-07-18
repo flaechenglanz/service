@@ -580,6 +580,17 @@ section{ position:relative; }
               -webkit-clip-path .9s cubic-bezier(.25,.75,.35,1),
               transform .9s cubic-bezier(.25,.75,.35,1),
               opacity .4s ease;
+
+   @media (max-width:720px){
+  .reveal{
+    opacity:1 !important;
+    clip-path:none !important;
+    -webkit-clip-path:none !important;
+    transform:none !important;
+    transition:none !important;
+  }
+}
+   
 }
 .reveal.is-visible{
   opacity:1;
