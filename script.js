@@ -1,0 +1,367 @@
+let mapInitialized = false;
+
+function initRadiusMap() {
+  if (mapInitialized) return;
+  if (typeof L === 'undefined') return;
+
+  const geocoderCss = document.createElement('link');
+  geocoderCss.rel = 'stylesheet';
+  geocoderCss.href = 'https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css';
+  document.head.appendChild(geocoderCss);
+
+  const geocoderJs = document.createElement('script');
+  geocoderJs.src = 'https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js';
+  geocoderJs.onload = function() {
+    buildMap();
+  };
+  document.head.appendChild(geocoderJs);
+}
+
+function buildMap() {
+  const tonwerkstrasseCoords = [52.2045, 8.7011];
+  const map = L.map('radius-map').setView(tonwerkstrasseCoords, 12);
+
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EBL, and the GIS User Community'
+  }).addTo(map);
+
+  L.circle(tonwerkstrasseCoords, {
+    color: '#1E72AF',
+    fillColor: '#88C2EC',
+    fillOpacity: 0.35,
+    radius: 5000
+  }).addTo(map);
+
+  const geocoder = L.Control.geocoder({
+    defaultMarkGeocode: false,
+    placeholder: "Adresse eingeben...",
+    errorMessage: "Adresse nicht gefunden."
+  })
+  .on('markgeocode', function(e) {
+    const latlng = e.geocode.center;
+
+    if (window.currentSearchMarker) {
+      map.removeLayer(window.currentSearchMarker);
+    }
+
+    window.currentSearchMarker = L.marker(latlng, {
+      icon: L.icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+      })
+    })
+    .addTo(map)
+    .bindPopup('<b>Gesuchte Adresse:</b><br>' + e.geocode.name)
+    .openPopup();
+
+    map.panTo(latlng);
+  })
+  .addTo(map);
+
+  mapInitialized = true;
+}
+
+let revealObserver = null;
+
+// Ordnet jeder Seite die Elemente zu, die die Scroll-Einblendung bekommen sollen.
+// Startseite hat die Klasse "reveal" bereits direkt im HTML gesetzt,
+// bei den anderen Seiten wird sie hier automatisch ergänzt.
+const revealSelectorsByPage = {
+  leistungen: ['.clean-grid > *', '.pricecalc-card', '.faq-list > *'],
+  referenzen: ['.ba-slider-grid > *', '.social-proof-grid > *'],
+  kontaktieren: ['.contact-card', '.map-frame', '.hours-box']
+};
+
+function ensureRevealClasses(pageId) {
+  const selectors = revealSelectorsByPage[pageId];
+  if (!selectors) return;
+  const page = document.getElementById('page-' + pageId);
+  if (!page) return;
+  selectors.forEach(function(sel) {
+    page.querySelectorAll(sel).forEach(function(el) {
+      el.classList.add('reveal');
+    });
+  });
+}
+
+function initScrollReveal(pageId) {
+  ensureRevealClasses(pageId);
+
+  const elements = document.querySelectorAll('#page-' + pageId + ' .reveal');
+  if (!elements.length) return;
+
+  if (revealObserver) {
+    revealObserver.disconnect();
+  }
+  elements.forEach(function(el) {
+    el.classList.remove('is-visible');
+  });
+
+  revealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  elements.forEach(function(el) {
+    revealObserver.observe(el);
+  });
+}
+
+function updateSlider(rangeEl, wrapId, handleId) {
+  var v = rangeEl.value;
+  var wrap = document.getElementById(wrapId);
+  var handle = document.getElementById(handleId);
+  if (wrap) wrap.style.clipPath = 'inset(0 0 0 ' + v + '%)';
+  if (handle) handle.style.left = v + '%';
+}
+
+// ---------- Preisrechner-Status im Kontaktformular ----------
+function updatePreisStatus(){
+  const btn = document.getElementById('pk-status-btn');
+  const title = document.getElementById('pk-status-title');
+  const sub = document.getElementById('pk-status-sub');
+  const icon = document.getElementById('pk-status-icon');
+  const hidden = document.getElementById('preis-ergebnis');
+  if (!btn || !hidden) return;
+  if (hidden.value && hidden.value.trim() !== ''){
+    btn.classList.remove('pending');
+    btn.classList.add('done');
+    title.textContent = 'Preis berechnet: ' + hidden.value;
+    sub.textContent = 'Klicken, um den Preisrechner erneut zu öffnen und Angaben zu ändern';
+    icon.textContent = '✓';
+    const hint = document.getElementById('pk-required-hint');
+    if (hint) hint.classList.remove('visible');
+  } else {
+    btn.classList.remove('done');
+    btn.classList.add('pending');
+    title.textContent = 'Preis noch nicht berechnet';
+    sub.textContent = 'Klicken, um den Preisrechner zu öffnen';
+    icon.textContent = '!';
+  }
+}
+
+// Von der Kontaktseite aus zum Preisrechner wechseln (echte Unterseite)
+function openPreisrechnerFromForm(){
+  sessionStorage.setItem('pkReturnToKontakt', '1');
+  window.location.href = 'preisrechner.html';
+}
+
+// ---------- Seiten-Setup beim Laden ----------
+document.addEventListener('DOMContentLoaded', function(){
+  const currentPageEl = document.querySelector('.web-page');
+  const currentPageId = currentPageEl ? currentPageEl.id.replace('page-', '') : null;
+
+  if (currentPageId === 'kontaktieren') {
+    initRadiusMap();
+  }
+  if (currentPageId) {
+    initScrollReveal(currentPageId);
+  }
+
+  // Vom Preisrechner übernommenes Ergebnis in das Kontaktformular einsetzen
+  if (currentPageId === 'kontaktieren') {
+    const pending = sessionStorage.getItem('pkPendingResult');
+    if (pending) {
+      try {
+        const data = JSON.parse(pending);
+        const hiddenTotal = document.getElementById('preis-ergebnis');
+        const hiddenDetails = document.getElementById('preis-details');
+        if (hiddenTotal) hiddenTotal.value = data.total;
+        if (hiddenDetails) hiddenDetails.value = data.details;
+      } catch (e) {}
+      sessionStorage.removeItem('pkPendingResult');
+    }
+  }
+
+  updatePreisStatus();
+  const form = document.querySelector('#page-kontaktieren form');
+  if (form){
+    form.addEventListener('submit', function(e){
+      const hidden = document.getElementById('preis-ergebnis');
+      if (!hidden || !hidden.value || hidden.value.trim() === ''){
+        e.preventDefault();
+        const hint = document.getElementById('pk-required-hint');
+        if (hint) hint.classList.add('visible');
+        const btn = document.getElementById('pk-status-btn');
+        if (btn) btn.scrollIntoView({behavior:'smooth', block:'center'});
+      }
+    });
+  }
+});
+
+
+// ---------- Standalone Preisrechner (eigene Seite) ----------
+(function(){
+  const embed = document.getElementById('pkp-embed');
+  if (!embed) return;
+
+  const PK_PRICES = {
+    klein:  { ein: 1.5, label: "Kleine Fenster" },
+    mittel: { ein: 3,   label: "Mittelgroße Fenster" },
+    gross:  { ein: 4,   label: "Große Fenster" }
+  };
+  const PK_SURCHARGE_LABELS = {
+    dach: "Dachfenster-Zuschlag",
+    sprossen: "Sprossen-Zuschlag",
+    falz: "Falz/Rahmen/Fensterbank-Zuschlag"
+  };
+  const PK_SURCHARGES = {
+    klein:  { dach: 0.75, sprossen: 0.5, falz: 0.5 },
+    mittel: { dach: 1.5,  sprossen: 1,   falz: 1 },
+    gross:  { dach: 2,    sprossen: 1.5, falz: 1.5 }
+  };
+  const PK_GLASS = { ein: 2, sprossenFix: 1 };
+  const PK_MIN_PRICE = 30;
+
+  function pkFormatEuro(v){
+    return v.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
+  }
+
+  const pkCategories = ["klein", "mittel", "gross"];
+  pkCategories.forEach(cat => {
+    const inputAnzahl = document.getElementById(`pkp-${cat}-anzahl`);
+    if (!inputAnzahl) return;
+    inputAnzahl.addEventListener("input", () => {
+      const val = Math.max(0, parseInt(inputAnzahl.value || 0));
+      Object.keys(PK_SURCHARGE_LABELS).forEach(key => {
+        const extraInput = document.getElementById(`pkp-${cat}-${key}`);
+        extraInput.max = val;
+        if (parseInt(extraInput.value) > val) extraInput.value = val;
+      });
+    });
+    Object.keys(PK_SURCHARGE_LABELS).forEach(key => {
+      const extraInput = document.getElementById(`pkp-${cat}-${key}`);
+      extraInput.addEventListener("input", () => {
+        const currentMax = parseInt(extraInput.max || 0);
+        let currentVal = parseInt(extraInput.value || 0);
+        if (currentVal > currentMax) extraInput.value = currentMax;
+      });
+    });
+  });
+
+  const pkWgM2Input = document.getElementById("pkp-wg-m2-input");
+  const pkWgSprossenInput = document.getElementById("pkp-wg-sprossen-slider");
+  pkWgM2Input.addEventListener("input", () => {
+    const totalM2 = Math.max(0, parseInt(pkWgM2Input.value || 0));
+    pkWgSprossenInput.max = totalM2;
+    if (parseInt(pkWgSprossenInput.value) > totalM2) pkWgSprossenInput.value = totalM2;
+  });
+  pkWgSprossenInput.addEventListener("input", () => {
+    const maxVal = parseInt(pkWgSprossenInput.max || 0);
+    if (parseInt(pkWgSprossenInput.value) > maxVal) pkWgSprossenInput.value = maxVal;
+  });
+
+  let pkpLastResult = null;
+
+  function pkpHideToForm(){
+    const toBtn = document.getElementById('pkp-to-form-btn');
+    if (toBtn) toBtn.classList.remove('visible');
+    pkpLastResult = null;
+  }
+
+  // Reset bei jeder Änderung
+  embed.addEventListener('input', function(e){
+    if (e.target.id === 'pkp-calc-btn' || e.target.id === 'pkp-to-form-btn') return;
+    pkpHideToForm();
+  });
+
+  function pkCalculatePrice(){
+    let total = 0;
+    let hasWindows = false;
+    const breakdown = [];
+    const detailsLines = [];
+
+    pkCategories.forEach(cat => {
+      const anzahl = Math.max(0, parseInt(document.getElementById(`pkp-${cat}-anzahl`).value || 0));
+      if (anzahl <= 0) return;
+      hasWindows = true;
+      const basePrice = PK_PRICES[cat].ein;
+      const sumBase = anzahl * basePrice;
+      total += sumBase;
+      breakdown.push(`<div class="result-row"><span>${PK_PRICES[cat].label} · ${anzahl}× Grundpreis (beidseitig)</span><span>${pkFormatEuro(sumBase)}</span></div>`);
+      detailsLines.push(`${PK_PRICES[cat].label}: ${anzahl}x (${pkFormatEuro(sumBase)})`);
+      Object.keys(PK_SURCHARGE_LABELS).forEach(key => {
+        let extra = parseInt(document.getElementById(`pkp-${cat}-${key}`).value || 0);
+        if (extra > anzahl) extra = anzahl;
+        if (extra > 0){
+          const add = extra * PK_SURCHARGES[cat][key];
+          total += add;
+          breakdown.push(`<div class="result-row"><span>${PK_PRICES[cat].label} · ${PK_SURCHARGE_LABELS[key]} (${extra}×)</span><span>+${pkFormatEuro(add)}</span></div>`);
+          detailsLines.push(`${PK_PRICES[cat].label} ${PK_SURCHARGE_LABELS[key]}: ${extra}x (+${pkFormatEuro(add)})`);
+        }
+      });
+    });
+
+    const wgM2 = parseFloat(pkWgM2Input.value || 0);
+    let wgSprossenM2 = parseFloat(pkWgSprossenInput.value || 0);
+    if (wgM2 > 0){
+      if (wgSprossenM2 > wgM2) wgSprossenM2 = wgM2;
+      const glassBase = wgM2 * PK_GLASS.ein;
+      total += glassBase;
+      breakdown.push(`<div class="result-row"><span>Glasflächen · ${wgM2} m² Grundpreis (beidseitig)</span><span>${pkFormatEuro(glassBase)}</span></div>`);
+      detailsLines.push(`Glasflächen: ${wgM2} m² (${pkFormatEuro(glassBase)})`);
+      if (wgSprossenM2 > 0){
+        const sprossenAufpreis = wgSprossenM2 * PK_GLASS.sprossenFix;
+        total += sprossenAufpreis;
+        breakdown.push(`<div class="result-row"><span>Glasflächen · Sprossen-Zuschlag (${wgSprossenM2} m²)</span><span>+${pkFormatEuro(sprossenAufpreis)}</span></div>`);
+        detailsLines.push(`Glasflächen Sprossen-Zuschlag: ${wgSprossenM2} m² (+${pkFormatEuro(sprossenAufpreis)})`);
+      }
+    }
+
+    const discount = parseFloat(document.getElementById('pkp-discount').value || 0);
+    const discountAmount = total * (discount / 100);
+    total -= discountAmount;
+    if (discountAmount > 0){
+      breakdown.push(`<div class="result-row"><span>Rabatt (${discount}%)</span><span>-${pkFormatEuro(discountAmount)}</span></div>`);
+      detailsLines.push(`Rabatt ${discount}%: -${pkFormatEuro(discountAmount)}`);
+    }
+
+    if (total < PK_MIN_PRICE && (hasWindows || wgM2 > 0)) total = PK_MIN_PRICE;
+
+    const card = document.getElementById("pkp-result-card");
+    const outTotal = document.getElementById("pkp-result-total");
+    const outBreak = document.getElementById("pkp-result-breakdown");
+    const empty = document.getElementById("pkp-result-empty");
+    const toBtn = document.getElementById("pkp-to-form-btn");
+
+    card.classList.add("visible");
+
+    if (!hasWindows && wgM2 <= 0){
+      outTotal.textContent = pkFormatEuro(0);
+      outBreak.innerHTML = "";
+      empty.style.display = "block";
+      if (toBtn) toBtn.classList.remove('visible');
+      pkpLastResult = null;
+      return;
+    }
+
+    outTotal.textContent = pkFormatEuro(total);
+    outBreak.innerHTML = breakdown.join("");
+    empty.style.display = "none";
+
+    pkpLastResult = { total: pkFormatEuro(total), details: detailsLines.join(" | ") };
+    if (toBtn) toBtn.classList.add('visible');
+
+    card.scrollIntoView({behavior:"smooth", block:"center"});
+  }
+
+  document.getElementById("pkp-calc-btn").addEventListener("click", pkCalculatePrice);
+
+  const toFormBtn = document.getElementById("pkp-to-form-btn");
+  if (toFormBtn){
+    toFormBtn.addEventListener("click", function(){
+      if (!pkpLastResult) return;
+      sessionStorage.setItem('pkPendingResult', JSON.stringify(pkpLastResult));
+      sessionStorage.removeItem('pkReturnToKontakt');
+      window.location.href = 'kontakt.html';
+    });
+  }
+})();
