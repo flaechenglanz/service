@@ -539,31 +539,8 @@ section{ position:relative; }
 
 /* Handys (<721px): 3 Spalten bleiben erhalten, Karten aber deutlich kompakter, damit sie nicht gequetscht wirken */
 @media (max-width:720px){
-  .clean-grid{ gap: 10px; }
-  .clean-card{ border-width:1px; border-top-width:3px; }
-  .clean-card .clean-media{ height: 70px; }
-  .clean-card .clean-body{ padding: 8px; }
-  .clean-card .clean-num{ font-size: .65rem; }
-  .clean-card h3{ font-size: .78rem; margin-top:.3em; }
-  .clean-card p{ font-size: .68rem; margin-top:.3em; line-height:1.3; }
-}
-@media (max-width:420px){
-  .clean-card .clean-media{ height: 55px; }
-  .clean-card .clean-body{ padding: 6px; }
-  .clean-card h3{ font-size: .7rem; }
-  .clean-card p{ display:none; }
-}
-
-/* Startseite: "Warum mich wählen" & "Über mich"-Bilder wirken im iPad-Bereich (721-1366px) zu klein,
-   da dort weiterhin die 2-spaltige PC-Aufteilung mit 80px-Gap genutzt wird. Auf Tablets stattdessen
-   wie auf dem Handy einspaltig darstellen, damit die Bilder groß und klar zu sehen sind. */
-@media (min-width:721px) and (max-width:1366px){
-  .why-grid{ grid-template-columns:1fr; gap:40px; }
-  .why-photo img{ transform:none; max-width:520px; margin:0 auto; }
-  .why-photo img:hover{ transform:scale(1.02); }
-  .about-grid{ grid-template-columns:1fr; gap:40px; }
-  .about-grid img{ transform:none; max-width:520px; margin:0 auto; display:block; }
-  .about-grid img:hover{ transform:scale(1.02); }
+  .about-grid{ grid-template-columns: 1fr; }
+  .clean-grid{ grid-template-columns: 1fr; gap: 24px; }
 }
 
 /* ---------- Scroll-Reveal-Animation: Wisch-Effekt von links nach rechts (alle Hauptseiten) ---------- */
@@ -710,4 +687,16 @@ section{ position:relative; }
 @media (max-width:720px){
   .social-card-wide{ flex-direction:column; }
   .social-card-wide .social-banner{ width:100%; min-width:0; height:200px; }
+}
+
+/* Startseite: "Warum mich wählen" & "Über mich"-Bilder wirken im iPad-Bereich (721-1366px) zu klein,
+   da dort weiterhin die 2-spaltige PC-Aufteilung mit 80px-Gap genutzt wird. Auf Tablets stattdessen
+   wie auf dem Handy einspaltig darstellen, damit die Bilder groß und klar zu sehen sind. */
+@media (min-width:721px) and (max-width:1366px){
+  .why-grid{ grid-template-columns:1fr; gap:40px; }
+  .why-photo img{ transform:none; max-width:520px; margin:0 auto; }
+  .why-photo img:hover{ transform:scale(1.02); }
+  .about-grid{ grid-template-columns:1fr; gap:40px; }
+  .about-grid img{ transform:none; max-width:520px; margin:0 auto; display:block; }
+  .about-grid img:hover{ transform:scale(1.02); }
 }
