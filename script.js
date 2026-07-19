@@ -1,3 +1,65 @@
+// ══════════════════════════════════════════════════════════════════
+// ⭐ PREIS-KONFIGURATION – HIER ALLE PREISE ÄNDERN ⭐
+// Diese Werte werden automatisch sowohl für die Berechnung im
+// Hintergrund als auch für die Anzeige der Preise auf der
+// Preisrechner-Seite verwendet. Du musst NUR HIER etwas ändern.
+// Alle Beträge in Euro. Dezimalzahlen mit Punkt schreiben (z.B. 1.5).
+// ══════════════════════════════════════════════════════════════════
+const PK_MIN_PRICE = 30; // Mindestpreis pro Auftrag
+
+// Grundpreis pro Fenster (beidseitige Reinigung, nur Glas)
+const PK_PRICES = {
+  klein:  { ein: 2, label: "Kleine Fenster" },
+  mittel: { ein: 4, label: "Mittelgroße Fenster" },
+  gross:  { ein: 5, label: "Große Fenster" }
+};
+
+// Zuschläge pro Fenster, je nach Größenkategorie
+const PK_SURCHARGES = {
+  klein:  { dach: 1, sprossen: 0.5,   falz: 0.5 },
+  mittel: { dach: 2, sprossen: 1, falz: 1 },
+  gross:  { dach: 2.5,   sprossen: 1.5,   falz: 1.5  }
+};
+
+// Preise für große zusammenhängende Glasflächen (Wintergarten, Schaufenster etc.), pro m²
+const PK_GLASS = { ein: 2, sprossenFix: 1 };
+// Hinweis: aktuell gibt es hier keinen Falz/Rahmen/Bank-Zuschlag pro m²,
+// nur einen Sprossen-Zuschlag. Falls du auch einen Falz-Zuschlag für
+// große Flächen berechnen willst, sag Bescheid – das müsste als neues
+// Eingabefeld in preisrechner.html ergänzt werden.
+
+const PK_SURCHARGE_LABELS = {
+  dach: "Dachfenster-Zuschlag",
+  sprossen: "Sprossen-Zuschlag",
+  falz: "Falz/Rahmen/Fensterbank-Zuschlag"
+};
+
+function pkFormatEuroPlain(v){
+  return v.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
+}
+
+// Überträgt die Werte oben automatisch in die sichtbaren Texte auf
+// preisrechner.html (Grundpreis-Anzeige, Zuschlag-Badges, Mindestpreis-Hinweis),
+// damit Anzeige und Berechnung nie auseinanderlaufen.
+function pkSyncDisplayFromConfig(){
+  const mindest = document.getElementById('pkp-note-mindestpreis');
+  if (mindest) mindest.textContent = pkFormatEuroPlain(PK_MIN_PRICE);
+
+  ["klein", "mittel", "gross"].forEach(cat => {
+    const priceLabel = document.getElementById(`pkp-price-${cat}`);
+    if (priceLabel) priceLabel.textContent = pkFormatEuroPlain(PK_PRICES[cat].ein) + " beidseitig pro Fenster";
+    Object.keys(PK_SURCHARGE_LABELS).forEach(key => {
+      const badge = document.getElementById(`pkp-${cat}-${key}-badge`);
+      if (badge) badge.textContent = "+" + pkFormatEuroPlain(PK_SURCHARGES[cat][key]);
+    });
+  });
+
+  const glassLabel = document.getElementById('pkp-glass-price-label');
+  if (glassLabel) glassLabel.textContent = "Preis: " + pkFormatEuroPlain(PK_GLASS.ein) + "/m² (beidseitig)";
+  const glassSprossenBadge = document.getElementById('pkp-glass-sprossen-fix');
+  if (glassSprossenBadge) glassSprossenBadge.textContent = "+" + pkFormatEuroPlain(PK_GLASS.sprossenFix) + "/m²";
+}
+
 let mapInitialized = false;
 
 function initRadiusMap() {
@@ -154,6 +216,8 @@ function openPreisrechnerFromForm(){
 
 // ---------- Seiten-Setup beim Laden ----------
 document.addEventListener('DOMContentLoaded', function(){
+  pkSyncDisplayFromConfig();
+
   const currentPageEl = document.querySelector('.web-page');
   const currentPageId = currentPageEl ? currentPageEl.id.replace('page-', '') : null;
 
@@ -188,23 +252,7 @@ document.addEventListener('DOMContentLoaded', function(){
   const embed = document.getElementById('pkp-embed');
   if (!embed) return;
 
-  const PK_PRICES = {
-    klein:  { ein: 2, label: "Kleine Fenster" },
-    mittel: { ein: 3,   label: "Mittelgroße Fenster" },
-    gross:  { ein: 4,   label: "Große Fenster" }
-  };
-  const PK_SURCHARGE_LABELS = {
-    dach: "Dachfenster-Zuschlag",
-    sprossen: "Sprossen-Zuschlag",
-    falz: "Falz/Rahmen/Fensterbank-Zuschlag"
-  };
-  const PK_SURCHARGES = {
-    klein:  { dach: 1, sprossen: 0.5, falz: 0.5 },
-    mittel: { dach: 1.5,  sprossen: 1,   falz: 1 },
-    gross:  { dach: 2,    sprossen: 1, falz: 1 }
-  };
-  const PK_GLASS = { ein: 2, sprossenFix: 1 };
-  const PK_MIN_PRICE = 30;
+  // Preise kommen jetzt zentral von oben (PK_PRICES, PK_SURCHARGES, PK_GLASS, PK_MIN_PRICE, PK_SURCHARGE_LABELS)
 
   function pkFormatEuro(v){
     return v.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
