@@ -18,7 +18,7 @@ const PK_PRICES = {
 const PK_SURCHARGES = {
   klein:  { dach: 1, sprossen: 1,   falz: 1 },
   mittel: { dach: 2, sprossen: 1, falz: 1 },
-  gross:  { dach: 2.5,   sprossen: 2,   falz: 2  }
+  gross:  { dach: 3,   sprossen: 2,   falz: 2  }
 };
 
 // Preise für große zusammenhängende Glasflächen (Wintergarten, Schaufenster etc.), pro m²
