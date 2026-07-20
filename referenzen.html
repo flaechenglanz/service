@@ -89,44 +89,43 @@
 
   <section class="section-pad" style="padding:60px 0;">
     <div class="container">
-      <p style="color:var(--ink-soft); max-width:60ch;">Zieh den Regler über das Bild von links nach rechts, um das dreckige Bild durch das saubere Bild zu ersetzen.</p>
       <div class="ba-slider-grid">
         <div class="ba-slider">
           <div class="ba-frame">
-            <img class="ba-after" src="images/ref2_nachher.jpg" alt="Nachher (Sauber)" loading="lazy">
-            <div class="ba-before-wrap" id="slider-wrap-1" style="clip-path:inset(0 0 0 0%); position:absolute; inset:0;">
-              <img class="ba-before" src="images/ref2_vorher.jpg" alt="Vorher (Dreckig)" style="width:100%; height:100%; object-fit:cover;" loading="lazy">
+            <img class="ba-after" src="images/ref2_vorher.jpg" alt="Vorher (Dreckig)" loading="lazy">
+            <div class="ba-before-wrap" id="slider-wrap-1" style="clip-path:inset(0 0 0 50%); position:absolute; inset:0;">
+              <img class="ba-before" src="images/ref2_nachher.jpg" alt="Nachher (Sauber)" style="width:100%; height:100%; object-fit:cover;" loading="lazy">
             </div>
-            <div class="ba-handle" id="slider-handle-1" style="left:0%;"></div>
+            <div class="ba-handle" id="slider-handle-1" style="left:50%;"></div>
             <div class="ba-label ba-label-left">Vorher</div>
             <div class="ba-label ba-label-right">Nachher</div>
-            <input type="range" min="0" max="100" value="0" class="ba-range" oninput="updateSlider(this, 'slider-wrap-1', 'slider-handle-1')" style="position:absolute; inset:0; width:100%; height:100%; opacity:0; z-index:10; cursor:ew-resize;">
+            <input type="range" min="0" max="100" value="50" class="ba-range" oninput="updateSlider(this, 'slider-wrap-1', 'slider-handle-1')" style="position:absolute; inset:0; width:100%; height:100%; opacity:0; z-index:10; cursor:ew-resize;">
           </div>
         </div>
 
         <div class="ba-slider">
           <div class="ba-frame">
-            <img class="ba-after" src="images/ref1_nachher.jpg" alt="Nachher (Sauber)" loading="lazy">
-            <div class="ba-before-wrap" id="slider-wrap-2" style="clip-path:inset(0 0 0 0%); position:absolute; inset:0;">
-              <img class="ba-before" src="images/ref1_vorher.jpg" alt="Vorher (Dreckig)" style="width:100%; height:100%; object-fit:cover;" loading="lazy">
+            <img class="ba-after" src="images/ref1_vorher.jpg" alt="Vorher (Dreckig)" loading="lazy">
+            <div class="ba-before-wrap" id="slider-wrap-2" style="clip-path:inset(0 0 0 50%); position:absolute; inset:0;">
+              <img class="ba-before" src="images/ref1_nachher.jpg" alt="Nachher (Sauber)" style="width:100%; height:100%; object-fit:cover;" loading="lazy">
             </div>
-            <div class="ba-handle" id="slider-handle-2" style="left:0%;"></div>
+            <div class="ba-handle" id="slider-handle-2" style="left:50%;"></div>
             <div class="ba-label ba-label-left">Vorher</div>
             <div class="ba-label ba-label-right">Nachher</div>
-            <input type="range" min="0" max="100" value="0" class="ba-range" oninput="updateSlider(this, 'slider-wrap-2', 'slider-handle-2')" style="position:absolute; inset:0; width:100%; height:100%; opacity:0; z-index:10; cursor:ew-resize;">
+            <input type="range" min="0" max="100" value="50" class="ba-range" oninput="updateSlider(this, 'slider-wrap-2', 'slider-handle-2')" style="position:absolute; inset:0; width:100%; height:100%; opacity:0; z-index:10; cursor:ew-resize;">
           </div>
         </div>
 
         <div class="ba-slider">
           <div class="ba-frame">
-            <img class="ba-after" src="images/ref3_nachher.jpg" alt="Nachher (Sauber)" loading="lazy">
-            <div class="ba-before-wrap" id="slider-wrap-3" style="clip-path:inset(0 0 0 0%); position:absolute; inset:0;">
-              <img class="ba-before" src="images/ref3_vorher.jpg" alt="Vorher (Dreckig)" style="width:100%; height:100%; object-fit:cover;" loading="lazy">
+            <img class="ba-after" src="images/ref3_vorher.jpg" alt="Vorher (Dreckig)" loading="lazy">
+            <div class="ba-before-wrap" id="slider-wrap-3" style="clip-path:inset(0 0 0 50%); position:absolute; inset:0;">
+              <img class="ba-before" src="images/ref3_nachher.jpg" alt="Nachher (Sauber)" style="width:100%; height:100%; object-fit:cover;" loading="lazy">
             </div>
-            <div class="ba-handle" id="slider-handle-3" style="left:0%;"></div>
+            <div class="ba-handle" id="slider-handle-3" style="left:50%;"></div>
             <div class="ba-label ba-label-left">Vorher</div>
             <div class="ba-label ba-label-right">Nachher</div>
-            <input type="range" min="0" max="100" value="0" class="ba-range" oninput="updateSlider(this, 'slider-wrap-3', 'slider-handle-3')" style="position:absolute; inset:0; width:100%; height:100%; opacity:0; z-index:10; cursor:ew-resize;">
+            <input type="range" min="0" max="100" value="50" class="ba-range" oninput="updateSlider(this, 'slider-wrap-3', 'slider-handle-3')" style="position:absolute; inset:0; width:100%; height:100%; opacity:0; z-index:10; cursor:ew-resize;">
           </div>
         </div>
       </div>
