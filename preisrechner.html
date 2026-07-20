@@ -14,7 +14,6 @@
 <meta name="geo.placename" content="Löhne">
 <link rel="canonical" href="https://flaechenglanz.github.io/service/preisrechner.html">
 
-<!-- Open Graph / Social Media Vorschau -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Flächenglanz Service">
 <meta property="og:title" content="Preisrechner Fensterreinigung | Flächenglanz Service">
@@ -80,14 +79,7 @@
 </header>
 
 <div id="page-preisrechner" class="web-page">
-  <section class="hero" style="padding:40px 0 50px;">
-    <div class="glanz-streak"></div>
-    <div class="container" style="position:relative; z-index:1;">
-      <h1>Preisrechner Fensterreinigung</h1>
-    </div>
-  </section>
-
-  <section class="section-pad" style="padding:20px 0 80px;">
+  <section class="section-pad" style="padding:40px 0 80px;">
     <div class="container">
       <div class="pk-embed" id="pkp-embed">
               <div class="pk-intro">
@@ -113,56 +105,45 @@
                   <h4>Ihre Fenster</h4>
                 </div>
 
-                <div class="surcharge-note">
-                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M12 9v4M12 17h.01M10.3 3.9L2.7 18a1.5 1.5 0 0 0 1.3 2.2h16a1.5 1.5 0 0 0 1.3-2.2L13.7 3.9a1.5 1.5 0 0 0-2.6 0z"/></svg>
-                  <p id="pkp-surcharge-text-vorgabe"><strong>Hinweis:</strong> Alle Preise verstehen sich beidseitig (Fenster werden innen und außen gereinigt). Die jeweiligen Zuschläge finden Sie direkt neben dem entsprechenden Feld. Tragen Sie einfach die Anzahl betroffener Fenster unten ein.</p>
-                </div>
-
                 <div class="window-item">
                   <div class="window-title">
                     <div class="window-icon">
                       <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><rect x="4" y="4" width="16" height="16" rx="1.5"/><line x1="12" y1="4" x2="12" y2="20"/><line x1="4" y1="12" x2="20" y2="12"/></svg>
                     </div>
-                    <strong>Kleines Fenster</strong>
+                    <strong>Kleines Fenster (unter 0,5 m²)</strong>
                   </div>
-                  <p class="window-desc">z. B. WC- oder Kellerfenster (unter 0,5 m²)</p>
                   <p class="window-price" id="pkp-price-klein">2,00 € beidseitig pro Fenster</p>
+                  
                   <div class="window-controls">
-                    <div class="field-group">
-                      <label class="field-label" for="pkp-klein-anzahl">Anzahl gesamt</label>
+                    <div class="field-group inline-field">
+                      <label class="field-label" for="pkp-klein-anzahl">Gesamt Anzahl:</label>
                       <input type="number" id="pkp-klein-anzahl" min="0" step="1" value="0" inputmode="numeric">
                     </div>
                   </div>
+
                   <div class="extras-box">
-                    <div class="extras-title">Davon betroffen von Zuschlägen (optional)</div>
                     <div class="extras-grid">
                       <div class="extra-row">
                         <div class="extra-info">
-                          <span class="extra-label-text">Dachfenster</span>
-                          <span class="extra-badge" id="pkp-klein-dach-badge">+1,00 €</span>
+                          <span class="extra-label-text">Davon Dachfenster:</span>
                         </div>
                         <div class="extra-counter-wrap">
-                          <span class="extra-input-label">Anzahl:</span>
                           <input type="number" id="pkp-klein-dach" min="0" max="0" value="0" step="1" inputmode="numeric">
                         </div>
                       </div>
                       <div class="extra-row">
                         <div class="extra-info">
-                          <span class="extra-label-text">Sprossen</span>
-                          <span class="extra-badge" id="pkp-klein-sprossen-badge">+0,50 €</span>
+                          <span class="extra-label-text">Davon mit Sprossen:</span>
                         </div>
                         <div class="extra-counter-wrap">
-                          <span class="extra-input-label">Anzahl:</span>
                           <input type="number" id="pkp-klein-sprossen" min="0" max="0" value="0" step="1" inputmode="numeric">
                         </div>
                       </div>
                       <div class="extra-row">
                         <div class="extra-info">
-                          <span class="extra-label-text">Falz/Rahmen/Fensterbank</span>
-                          <span class="extra-badge" id="pkp-klein-falz-badge">+0,50 €</span>
+                          <span class="extra-label-text">Davon mit Rahmen/Falz/Bank:</span>
                         </div>
                         <div class="extra-counter-wrap">
-                          <span class="extra-input-label">Anzahl:</span>
                           <input type="number" id="pkp-klein-falz" min="0" max="0" value="0" step="1" inputmode="numeric">
                         </div>
                       </div>
@@ -175,46 +156,40 @@
                     <div class="window-icon">
                       <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="1.5"/><line x1="12" y1="3" x2="12" y2="21"/><line x1="3" y1="12" x2="21" y2="12"/></svg>
                     </div>
-                    <strong>Mittelgroßes Fenster</strong>
+                    <strong>Mittelgroßes Fenster (0,5 – 1,5 m²)</strong>
                   </div>
-                  <p class="window-desc">Standardfenster (0,5 – 1,5 m²)</p>
                   <p class="window-price" id="pkp-price-mittel">3,00 € beidseitig pro Fenster</p>
+
                   <div class="window-controls">
-                    <div class="field-group">
-                      <label class="field-label" for="pkp-mittel-anzahl">Anzahl gesamt</label>
+                    <div class="field-group inline-field">
+                      <label class="field-label" for="pkp-mittel-anzahl">Gesamt Anzahl:</label>
                       <input type="number" id="pkp-mittel-anzahl" min="0" step="1" value="0" inputmode="numeric">
                     </div>
                   </div>
+
                   <div class="extras-box">
-                    <div class="extras-title">Davon betroffen von Zuschlägen (optional)</div>
                     <div class="extras-grid">
                       <div class="extra-row">
                         <div class="extra-info">
-                          <span class="extra-label-text">Dachfenster</span>
-                          <span class="extra-badge" id="pkp-mittel-dach-badge">+1,50 €</span>
+                          <span class="extra-label-text">Davon Dachfenster:</span>
                         </div>
                         <div class="extra-counter-wrap">
-                          <span class="extra-input-label">Anzahl:</span>
                           <input type="number" id="pkp-mittel-dach" min="0" max="0" value="0" step="1" inputmode="numeric">
                         </div>
                       </div>
                       <div class="extra-row">
                         <div class="extra-info">
-                          <span class="extra-label-text">Sprossen</span>
-                          <span class="extra-badge" id="pkp-mittel-sprossen-badge">+1,00 €</span>
+                          <span class="extra-label-text">Davon mit Sprossen:</span>
                         </div>
                         <div class="extra-counter-wrap">
-                          <span class="extra-input-label">Anzahl:</span>
                           <input type="number" id="pkp-mittel-sprossen" min="0" max="0" value="0" step="1" inputmode="numeric">
                         </div>
                       </div>
                       <div class="extra-row">
                         <div class="extra-info">
-                          <span class="extra-label-text">Falz/Rahmen/Fensterbank</span>
-                          <span class="extra-badge" id="pkp-mittel-falz-badge">+1,00 €</span>
+                          <span class="extra-label-text">Davon mit Rahmen/Falz/Bank:</span>
                         </div>
                         <div class="extra-counter-wrap">
-                          <span class="extra-input-label">Anzahl:</span>
                           <input type="number" id="pkp-mittel-falz" min="0" max="0" value="0" step="1" inputmode="numeric">
                         </div>
                       </div>
@@ -227,46 +202,40 @@
                     <div class="window-icon">
                       <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><rect x="5" y="2" width="14" height="20" rx="1.5"/><line x1="12" y1="2" x2="12" y2="22"/><line x1="5" y1="11" x2="19" y2="11"/></svg>
                     </div>
-                    <strong>Großes Fenster</strong>
+                    <strong>Großes Fenster (über 1,5 m²)</strong>
                   </div>
-                  <p class="window-desc">z.B Bodentiefes Fenster / Terrassentür (über 1,5 m²)</p>
                   <p class="window-price" id="pkp-price-gross">4,00 € beidseitig pro Fenster</p>
+
                   <div class="window-controls">
-                    <div class="field-group">
-                      <label class="field-label" for="pkp-gross-anzahl">Anzahl gesamt</label>
+                    <div class="field-group inline-field">
+                      <label class="field-label" for="pkp-gross-anzahl">Gesamt Anzahl:</label>
                       <input type="number" id="pkp-gross-anzahl" min="0" step="1" value="0" inputmode="numeric">
                     </div>
                   </div>
+
                   <div class="extras-box">
-                    <div class="extras-title">Davon betroffen von Zuschlägen (optional)</div>
                     <div class="extras-grid">
                       <div class="extra-row">
                         <div class="extra-info">
-                          <span class="extra-label-text">Dachfenster</span>
-                          <span class="extra-badge" id="pkp-gross-dach-badge">+2,00 €</span>
+                          <span class="extra-label-text">Davon Dachfenster:</span>
                         </div>
                         <div class="extra-counter-wrap">
-                          <span class="extra-input-label">Anzahl:</span>
                           <input type="number" id="pkp-gross-dach" min="0" max="0" value="0" step="1" inputmode="numeric">
                         </div>
                       </div>
                       <div class="extra-row">
                         <div class="extra-info">
-                          <span class="extra-label-text">Sprossen</span>
-                          <span class="extra-badge" id="pkp-gross-sprossen-badge">+1,00 €</span>
+                          <span class="extra-label-text">Davon mit Sprossen:</span>
                         </div>
                         <div class="extra-counter-wrap">
-                          <span class="extra-input-label">Anzahl:</span>
                           <input type="number" id="pkp-gross-sprossen" min="0" max="0" value="0" step="1" inputmode="numeric">
                         </div>
                       </div>
                       <div class="extra-row">
                         <div class="extra-info">
-                          <span class="extra-label-text">Falz/Rahmen/Fensterbank</span>
-                          <span class="extra-badge" id="pkp-gross-falz-badge">+1,00 €</span>
+                          <span class="extra-label-text">Davon mit Rahmen/Falz/Bank:</span>
                         </div>
                         <div class="extra-counter-wrap">
-                          <span class="extra-input-label">Anzahl:</span>
                           <input type="number" id="pkp-gross-falz" min="0" max="0" value="0" step="1" inputmode="numeric">
                         </div>
                       </div>
@@ -274,9 +243,25 @@
                   </div>
                 </div>
 
+                <h4 class="surcharge-heading">Zuschläge</h4>
+                <div class="surcharge-overview">
+                  <div class="surcharge-box">
+                    <span class="surcharge-name">Dachfenster</span>
+                    <span class="surcharge-percent" id="pkp-surcharge-dach-percent">+50% pro Fenster</span>
+                  </div>
+                  <div class="surcharge-box">
+                    <span class="surcharge-name">Sprossen</span>
+                    <span class="surcharge-percent" id="pkp-surcharge-sprossen-percent">+25% pro Fenster</span>
+                  </div>
+                  <div class="surcharge-box">
+                    <span class="surcharge-name">Rahmen/Falz/Bank</span>
+                    <span class="surcharge-percent" id="pkp-surcharge-falz-percent">+25% pro Fenster</span>
+                  </div>
+                </div>
+
                 <div class="included-note">
                   <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M12 9v4M12 17h.01M10.3 3.9L2.7 18a1.5 1.5 0 0 0 1.3 2.2h16a1.5 1.5 0 0 0 1.3-2.2L13.7 3.9a1.5 1.5 0 0 0-2.6 0z"/></svg>
-                  <p><strong>Hinweis zur einseitigen Berechnung:</strong> Lässt sich ein Fenster von innen nicht öffnen, oder wird zur Reinigung von außen eine höhere Leiter benötigt, kann dieses Fenster nur einseitig gereinigt werden. In diesem Fall wird der Preis für dieses Fenster halbiert. Diese Entscheidung erfolgt vor Ort und <strong>wird von diesem Rechner nicht berücksichtigt</strong>. Der hier berechnete Preis kann sich dadurch vor Ort noch nach unten korrigieren.</p>
+                  <p>Lässt sich ein Fenster von innen nicht öffnen, oder wird zur Reinigung von außen eine höhere Leiter benötigt, kann dieses Fenster nur einseitig gereinigt werden. In diesem Fall wird der Preis für dieses Fenster halbiert. Der hier berechnete Preis kann sich dadurch vor Ort noch nach unten korrigieren.</p>
                 </div>
               </div>
 
@@ -290,24 +275,29 @@
                   <small style="font-weight:600;">Nur möglich, wenn alle Scheiben ohne Einsatz einer höheren Leiter erreichbar sind.</small><br><br>
                   <span style="font-weight:800; display:block; margin-bottom:18px;" id="pkp-glass-price-label">Preis: 2,00 €/m² (beidseitig)</span>
                   <div class="window-controls" style="margin-left:0; margin-bottom:22px;">
-                    <div class="field-group">
-                      <label class="field-label" for="pkp-wg-m2-input">m² Fläche Gesamt</label>
+                    <div class="field-group inline-field">
+                      <label class="field-label" for="pkp-wg-m2-input">Gesamt Anzahl (m²):</label>
                       <input type="number" id="pkp-wg-m2-input" min="0" value="0" inputmode="numeric">
                     </div>
                   </div>
                   <div class="extras-box" style="margin-left:0;">
-                    <div class="extras-title">Davon betroffen von Zuschlägen (optional)</div>
                     <div class="extras-grid">
                       <div class="extra-row">
                         <div class="extra-info">
-                          <span class="extra-label-text">Davon m² mit Sprossen</span>
-                          <span class="extra-badge" id="pkp-glass-sprossen-fix">+1,00 €/m²</span>
+                          <span class="extra-label-text">Davon mit Sprossen:</span>
                         </div>
                         <div class="extra-counter-wrap">
-                          <span class="extra-input-label">m²:</span>
                           <input type="number" id="pkp-wg-sprossen-slider" min="0" max="0" value="0" step="1" inputmode="numeric">
                         </div>
                       </div>
+                    </div>
+                  </div>
+
+                  <h4 class="surcharge-heading">Zuschläge:</h4>
+                  <div class="surcharge-overview surcharge-overview-single">
+                    <div class="surcharge-box">
+                      <span class="surcharge-name">Sprossen</span>
+                      <span class="surcharge-percent" id="pkp-glass-sprossen-percent">+50% pro m²</span>
                     </div>
                   </div>
                 </div>
@@ -327,7 +317,6 @@
     </div>
   </section>
 </div>
-
 
 <footer class="site-footer">
   <div class="container">
