@@ -11,14 +11,14 @@ const PK_MIN_PRICE = 30; // Mindestpreis pro Auftrag
 const PK_PRICES = {
   klein:  { ein: 2, label: "Kleine Fenster" },
   mittel: { ein: 4, label: "Mittelgroße Fenster" },
-  gross:  { ein: 6, label: "Große Fenster" }
+  gross:  { ein: 5, label: "Große Fenster" }
 };
 
 // Zuschläge pro Fenster, je nach Größenkategorie
 const PK_SURCHARGES = {
   klein:  { dach: 1, sprossen: 1,   falz: 1 },
   mittel: { dach: 2, sprossen: 1, falz: 1 },
-  gross:  { dach: 3,   sprossen: 1,   falz: 1  }
+  gross:  { dach: 2.5,   sprossen: 2,   falz: 2  }
 };
 
 // Preise für große zusammenhängende Glasflächen (Wintergarten, Schaufenster etc.), pro m²
