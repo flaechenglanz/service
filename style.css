@@ -729,17 +729,3 @@ section{ position:relative; }
   .about-grid img{ transform:none; max-width:520px; margin:0 auto; display:block; }
   .about-grid img:hover{ transform:scale(1.02); }
 }
-
-.inline-field {
-  display: flex !important;
-  align-items: center !important;
-  gap: 10px !important;
-}
-
-.inline-field .field-label {
-  margin-bottom: 0 !important;
-}
-
-.inline-field input {
-  width: auto !important;
-}
