@@ -721,3 +721,16 @@ section{ position:relative; }
   .about-grid img{ transform:none; max-width:520px; margin:0 auto; display:block; }
   .about-grid img:hover{ transform:scale(1.02); }
 }
+
+/* Ausrichtung für inline Eingabefelder im Preisrechner */
+.pk-embed .field-group.inline-field {
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+.pk-embed .field-group.inline-field label.field-label {
+  font-size: 0.95rem;
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: 700;
+}
