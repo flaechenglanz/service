@@ -14,15 +14,11 @@ const PK_PRICES = {
   gross:  { ein: 6, label: "Große Fenster" }
 };
 
-// Zuschläge pro Fenster, je nach Größenkategorie
-const PK_SURCHARGES = {
-  klein:  { dach: 1, sprossen: 0.5,   falz: 0.5 },
-  mittel: { dach: 2, sprossen: 1, falz: 1 },
-  gross:  { dach: 3,   sprossen: 1.5,   falz: 1.5  }
-};
+// Zuschläge als Prozentsatz vom jeweiligen Grundpreis (gilt für alle Größenkategorien gleich)
+const PK_SURCHARGE_PERCENT = { dach: 0.5, sprossen: 0.25, falz: 0.25 };
 
 // Preise für große zusammenhängende Glasflächen (Wintergarten, Schaufenster etc.), pro m²
-const PK_GLASS = { ein: 2, sprossenFix: 1 };
+const PK_GLASS = { ein: 2, sprossenPercent: 0.5 };
 // Hinweis: aktuell gibt es hier keinen Falz/Rahmen/Bank-Zuschlag pro m²,
 // nur einen Sprossen-Zuschlag. Falls du auch einen Falz-Zuschlag für
 // große Flächen berechnen willst, sag Bescheid – das müsste als neues
@@ -48,16 +44,17 @@ function pkSyncDisplayFromConfig(){
   ["klein", "mittel", "gross"].forEach(cat => {
     const priceLabel = document.getElementById(`pkp-price-${cat}`);
     if (priceLabel) priceLabel.textContent = pkFormatEuroPlain(PK_PRICES[cat].ein) + " beidseitig pro Fenster";
-    Object.keys(PK_SURCHARGE_LABELS).forEach(key => {
-      const badge = document.getElementById(`pkp-${cat}-${key}-badge`);
-      if (badge) badge.textContent = "+" + pkFormatEuroPlain(PK_SURCHARGES[cat][key]);
-    });
+  });
+
+  Object.keys(PK_SURCHARGE_LABELS).forEach(key => {
+    const percentEl = document.getElementById(`pkp-surcharge-${key}-percent`);
+    if (percentEl) percentEl.textContent = "+" + Math.round(PK_SURCHARGE_PERCENT[key] * 100) + "% pro Fenster";
   });
 
   const glassLabel = document.getElementById('pkp-glass-price-label');
   if (glassLabel) glassLabel.textContent = "Preis: " + pkFormatEuroPlain(PK_GLASS.ein) + "/m² (beidseitig)";
-  const glassSprossenBadge = document.getElementById('pkp-glass-sprossen-fix');
-  if (glassSprossenBadge) glassSprossenBadge.textContent = "+" + pkFormatEuroPlain(PK_GLASS.sprossenFix) + "/m²";
+  const glassSprossenPercent = document.getElementById('pkp-glass-sprossen-percent');
+  if (glassSprossenPercent) glassSprossenPercent.textContent = "+" + Math.round(PK_GLASS.sprossenPercent * 100) + "% pro m²";
 }
 
 let mapInitialized = false;
@@ -325,7 +322,7 @@ document.addEventListener('DOMContentLoaded', function(){
         let extra = parseInt(document.getElementById(`pkp-${cat}-${key}`).value || 0);
         if (extra > anzahl) extra = anzahl;
         if (extra > 0){
-          const add = extra * PK_SURCHARGES[cat][key];
+          const add = extra * basePrice * PK_SURCHARGE_PERCENT[key];
           total += add;
           breakdown.push(`<div class="result-row"><span>${PK_PRICES[cat].label} · ${PK_SURCHARGE_LABELS[key]} (${extra}×)</span><span>+${pkFormatEuro(add)}</span></div>`);
           detailsLines.push(`${PK_PRICES[cat].label} ${PK_SURCHARGE_LABELS[key]}: ${extra}x (+${pkFormatEuro(add)})`);
@@ -342,7 +339,7 @@ document.addEventListener('DOMContentLoaded', function(){
       breakdown.push(`<div class="result-row"><span>Glasflächen · ${wgM2} m² Grundpreis (beidseitig)</span><span>${pkFormatEuro(glassBase)}</span></div>`);
       detailsLines.push(`Glasflächen: ${wgM2} m² (${pkFormatEuro(glassBase)})`);
       if (wgSprossenM2 > 0){
-        const sprossenAufpreis = wgSprossenM2 * PK_GLASS.sprossenFix;
+        const sprossenAufpreis = wgSprossenM2 * PK_GLASS.ein * PK_GLASS.sprossenPercent;
         total += sprossenAufpreis;
         breakdown.push(`<div class="result-row"><span>Glasflächen · Sprossen-Zuschlag (${wgSprossenM2} m²)</span><span>+${pkFormatEuro(sprossenAufpreis)}</span></div>`);
         detailsLines.push(`Glasflächen Sprossen-Zuschlag: ${wgSprossenM2} m² (+${pkFormatEuro(sprossenAufpreis)})`);

@@ -619,6 +619,14 @@ section{ position:relative; }
 .pk-embed input[type="number"], .pk-embed select{ width:100%; padding:10px 14px; border:2px solid var(--c-700); border-radius:10px; font-size:16px; font-weight:700; color:var(--ink); background:var(--c-800); font-family:var(--font-body); }
 .pk-embed input[type="number"]{ width:100px; }
 .pk-embed input:focus, .pk-embed select:focus{ outline:none; border-color:var(--c-400); box-shadow:0 0 0 4px rgba(30,114,175,0.2); }
+.pk-embed .surcharge-heading{ font-size:1rem; font-weight:800; color:var(--ink); margin:20px 0 10px; text-transform:uppercase; letter-spacing:.04em; }
+.pk-embed .surcharge-overview{ display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; margin-bottom:20px; }
+.pk-embed .surcharge-overview:last-child{ margin-bottom:0; }
+.pk-embed .surcharge-overview-single{ grid-template-columns:minmax(0,220px); }
+.pk-embed .surcharge-box{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; text-align:center; background:var(--c-900); border:2px solid var(--c-700); border-radius:10px; padding:16px 10px; }
+.pk-embed .surcharge-name{ font-size:.85rem; font-weight:800; color:var(--ink); }
+.pk-embed .surcharge-percent{ font-size:1.15rem; font-weight:800; color:var(--ink); }
+@media (max-width:580px){ .pk-embed .surcharge-overview{ grid-template-columns:1fr; } }
 .pk-embed .extras-box{ margin-top:20px; margin-left:46px; padding:18px 20px; background:var(--c-800); border:2px dashed var(--c-700); border-radius:10px; }
 .pk-embed .extras-title{ font-size:12px; font-weight:800; color:var(--ink); text-transform:uppercase; letter-spacing:.04em; margin-bottom:14px; }
 .pk-embed .extras-grid{ display:flex; flex-direction:column; gap:16px; }
@@ -720,20 +728,4 @@ section{ position:relative; }
   .about-grid{ grid-template-columns:1fr; gap:40px; }
   .about-grid img{ transform:none; max-width:520px; margin:0 auto; display:block; }
   .about-grid img:hover{ transform:scale(1.02); }
-}
-
-}
-
-.inline-field {
-  display: flex !important;
-  align-items: center !important;
-  gap: 10px !important;
-}
-
-.inline-field .field-label {
-  margin-bottom: 0 !important;
-}
-
-.inline-field input {
-  width: auto !important;
 }
