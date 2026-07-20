@@ -722,15 +722,18 @@ section{ position:relative; }
   .about-grid img:hover{ transform:scale(1.02); }
 }
 
-/* Ausrichtung für inline Eingabefelder im Preisrechner */
-.pk-embed .field-group.inline-field {
-  flex-direction: row;
-  align-items: center;
-  gap: 12px;
 }
-.pk-embed .field-group.inline-field label.field-label {
-  font-size: 0.95rem;
-  text-transform: none;
-  letter-spacing: normal;
-  font-weight: 700;
+
+.inline-field {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.inline-field .field-label {
+  margin-bottom: 0 !important;
+}
+
+.inline-field input {
+  width: auto !important;
 }
